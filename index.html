@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        html {
+            background-color: #666666;
+            user-select: none;
+        }
+
+        .center {
+            background-color: #000000;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .tr {
+            position: fixed;
+            right: 0;
+            top: 0;
+        }
+    </style>
+    <script src="js/static.js"></script>
+    <script src="js/event.js"></script>
+    <script src="js/node.js"></script>
+    <script src="js/nodes/Pct.js"></script>
+    <script src="js/nodes/Rect.js"></script>
+    <script src="js/nodes/frame.js"></script>
+    <script src="js/nodes/Text.js"></script>
+    <script src="js/game.js"></script>
+    <script>
+        window.onload = function () {
+            const e = document.createElement("canvas");
+            e.width = 800;
+            e.height = 600;
+            e.className = "center";
+            window.document.body.appendChild(e);
+            fps();
+            new Game(e.getContext("2d")).run();
+        };
+
+        function fps() {
+            const fps = document.createElement("span");
+            fps.id = "fps";
+            fps.className = "tr"
+            window.document.body.appendChild(fps);
+        }
+
+        // window.onresize
+    </script>
+
+</head>
+<body>
+
+</body>
+</html>
