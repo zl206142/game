@@ -126,6 +126,8 @@ class Game extends Node {
         t.color = randomColor();
         t.x = 400;
         t.y = 300;
+        // t.ax = 0.5;
+        // t.ay = 0.5;
         this.add(t);
 
     }

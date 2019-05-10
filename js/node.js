@@ -102,7 +102,6 @@ class Node {
     get matrix() {
         if (this._change) {
             this._matrix = mixt(this._x, this._y, this.rotatePI, this._scaleX, this._scaleY);
-            this._change = false;
         }
         return this._matrix;
     }
@@ -115,6 +114,7 @@ class Node {
         this.draw(ctx);
         this.drawChildren(ctx, dt);
         ctx.restore();
+        this._change = false;
     }
 
     draw(ctx) {

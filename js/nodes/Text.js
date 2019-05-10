@@ -3,6 +3,9 @@ class Text extends Node {
     constructor(text) {
         super();
         this._text = text;
+        this._change = true;
+        this.fontSize = 20;
+        this._fontName = "Georgia";
     }
 
     set color(value) {
@@ -25,16 +28,17 @@ class Text extends Node {
         ctx.fillStyle = this._fillStyle;
         ctx.textBaseline = "top";
         this.textWidth(ctx);
-        ctx.fillText(this._text, -this.ax, -this.ay);
+        ctx.fillText(this._text, -this.ax * this.width, -this.ay * this.height);
     }
 
     textWidth(ctx) {
         if (this._change) {
-            this.width = ctx.measureText(this._text);
+            this.width = ctx.measureText(this._text).width;
+            console.log(this.width)
         }
     }
 
     get font() {
-        return `${this._fontSize || 20}px ${this._fontName || "Georgia"}`;
+        return `${this._fontSize}px ${this._fontName}`;
     }
 }
