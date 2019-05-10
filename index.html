@@ -15,6 +15,7 @@
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
+            height: 90%;
         }
 
         .tr {
@@ -32,20 +33,21 @@
     <script src="js/nodes/Text.js"></script>
     <script src="js/game.js"></script>
     <script>
+        window.G = window.G || {};
         window.onload = function () {
             const e = document.createElement("canvas");
-            e.width = 800;
-            e.height = 600;
+            e.width = 750;
+            e.height = 1334;
             e.className = "center";
             window.document.body.appendChild(e);
             fps();
-            new Game(e.getContext("2d")).run();
+            G.game = new Game(e.getContext("2d")).run();
         };
 
         function fps() {
             const fps = document.createElement("span");
             fps.id = "fps";
-            fps.className = "tr"
+            fps.className = "tr";
             window.document.body.appendChild(fps);
         }
 

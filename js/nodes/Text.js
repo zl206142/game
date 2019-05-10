@@ -34,7 +34,6 @@ class Text extends Node {
     textWidth(ctx) {
         if (this._change) {
             this.width = ctx.measureText(this._text).width;
-            console.log(this.width)
         }
     }
 

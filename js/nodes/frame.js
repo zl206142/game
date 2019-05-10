@@ -76,7 +76,8 @@ class Frame extends Pct {
         this._dely = 100;
     }
 
-    update(dt) {
+    loop(ctx, dt) {
+        super.loop(ctx, dt);
         this._stime += dt;
         if (this._stime < this._dely) {
             return;
@@ -84,7 +85,6 @@ class Frame extends Pct {
         this._stime -= this._dely;
         this.next();
     }
-
 
     next() {
         if (!this._ht) {

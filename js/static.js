@@ -23,7 +23,7 @@ function mixt(x, y, rotate, scaleX, scaleY) {
     let m = [
         1, 0, x,
         0, 1, y,
-        x, y, 1
+        0, 0, 1
     ];
     let s = [
         scaleX, 0, 0,
@@ -49,6 +49,13 @@ function mm3(m1, m2) {
     return r;
 }
 
+function rotation(x, y, r) {
+    return new Point(
+        Math.cos(r) * x + Math.sin(r) * y,
+        -Math.sin(r) * x + Math.cos(r) * y
+    )
+}
+
 function randomColor() {
     return "#" + randomRGB() + randomRGB() + randomRGB();
 }
@@ -56,4 +63,45 @@ function randomColor() {
 function randomRGB() {
     let r = "00" + Math.round(Math.random() * 0xff).toString(16);
     return r.substr(r.length - 2, 2);
+}
+
+class Point {
+    get x() {
+        return this._x;
+    }
+
+    set x(value) {
+        this._x = value;
+    }
+
+    get y() {
+        return this._y;
+    }
+
+    set y(value) {
+        this._y = value;
+    }
+
+    constructor(x, y) {
+        this._x = x;
+        this._y = y;
+    }
+
+    add(x, y) {
+        this.x += x;
+        this.y += y;
+        return this;
+    }
+
+    div(x, y) {
+        this.x /= x;
+        this.y /= y;
+        return this;
+    }
+
+    mul(x, y) {
+        this.x *= x;
+        this.y *= y;
+        return this;
+    }
 }
