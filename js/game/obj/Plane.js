@@ -1,10 +1,17 @@
 class Plane extends Pct {
     init() {
-        this.on("mousedown", this.shoot);
+        // this.on("mousedown", this.shoot);
+        this._speed = 500;
+        this._shootTime = 0;
     }
 
-    shoot(event) {
-        let g = this.localToGlobal(event.x, 0);
+    shoot(dt) {
+        this._shootTime += dt;
+        if (this._shootTime < 200) {
+            return;
+        }
+        this._shootTime -= 200;
+        let g = this.localToGlobal(this.width / 2, 0);
         G.game.add(new Bullet(10, 20, g.x, g.y))
     }
 
@@ -25,5 +32,23 @@ class Plane extends Pct {
             this.add(new Fire(this.width / 2, this.height / 2));
             return true;
         }
+    }
+
+    closeTo(x, y) {
+        if (y === undefined) {
+            y = x.y;
+            x = x.x;
+        }
+        this._closePoint = new Point(x, y);
+    }
+
+    update(dt) {
+        this.shoot(dt);
+        if (!this._closePoint) {
+            return;
+        }
+        let move = closeTo(this._closePoint.clone().sub(this.x, this.y), this._speed * dt / 1000);
+        this.x += move.x;
+        this.y += move.y;
     }
 }

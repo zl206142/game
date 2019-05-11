@@ -25,11 +25,11 @@ class Main extends Game {
         plane.ay = 0.5;
         plane.scaleX = 0.5;
         plane.scaleY = 0.5;
+        plane.x = this.width / 2;
+        plane.y = this.height * 0.8;
         this.add(plane);
-        this.on("mousemove", function (event) {
-            plane.x = event.x;
-            plane.y = event.y;
-        })
+        this.on("mousemove", plane.closeTo.bind(plane));
+        this.on("mousedown", plane.closeTo.bind(plane));
         return plane;
     }
 

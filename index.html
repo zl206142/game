@@ -28,7 +28,7 @@
     <script>
         window.G = window.G || {};
         window.onload = function () {
-            load("", files).then(() => {
+            preLoad().then(() => {
                 const e = document.createElement("canvas");
                 e.width = 750;
                 e.height = 1334;
@@ -57,7 +57,7 @@
         }
 
         window.onresize = resize;
-        oncontextmenu = function (){
+        oncontextmenu = function () {
             return false
         }
     </script>

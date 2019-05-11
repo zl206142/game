@@ -7,10 +7,10 @@ class Bullet extends Rect {
     }
 
     init() {
-        this.color = "#aa4b2c";
+        this.color = "#ffffff";
         this.ax = 0.5;
         this.ay = 0.5;
-        this._speed = 300;
+        this._speed = 1000;
     }
 
     update(dt) {

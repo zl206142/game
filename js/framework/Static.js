@@ -88,6 +88,20 @@ function cross(x1, y1, x2, y2, rx, ry, rw, rh) {
     return (between(0, t.x, p1.x) || between(0, t.x, p2.x) || between(0, t.x, p3.x) || between(0, t.x, p4.x)) && !((p1.y > 0 && p2.y > 0 && p3.y > 0 && p4.y > 0) || (p1.y < 0 && p2.y < 0 && p3.y < 0 && p4.y < 0));
 }
 
+function closeTo(x, y, v) {
+    if (v === undefined) {
+        v = y;
+        y = x.y;
+        x = x.x;
+    }
+    let z = Math.sqrt(x * x + y * y);
+    let b = v / z;
+    if (b > 1) {
+        b = 1;
+    }
+    return new Point(x * b, y * b);
+}
+
 class Point {
     get x() {
         return this._x;
@@ -126,5 +140,15 @@ class Point {
         this.x *= x;
         this.y *= y;
         return this;
+    }
+
+    sub(x, y) {
+        this.x -= x;
+        this.y -= y;
+        return this;
+    }
+
+    clone() {
+        return new Point(this.x, this.y);
     }
 }
