@@ -65,6 +65,29 @@ function randomRGB() {
     return r.substr(r.length - 2, 2);
 }
 
+function between(a, b, i) {
+    return a < i && b > i || a > i && b < i;
+}
+
+function getRotate(x, y) {
+    return Math.atan2(y, x);
+}
+
+function cross(x1, y1, x2, y2, rx, ry, rw, rh) {
+    x2 -= x1;
+    y2 -= y1;
+    rx -= x1;
+    ry -= y1;
+    let rx2 = rx + rw, ry2 = ry + rh;
+    let ro = getRotate(x2, y2);
+    let t = rotation(x2, y2, ro);
+    let p1 = rotation(rx, ry, ro);
+    let p2 = rotation(rx, ry2, ro);
+    let p3 = rotation(rx2, ry, ro);
+    let p4 = rotation(rx2, ry2, ro);
+    return (between(0, t.x, p1.x) || between(0, t.x, p2.x) || between(0, t.x, p3.x) || between(0, t.x, p4.x)) && !((p1.y > 0 && p2.y > 0 && p3.y > 0 && p4.y > 0) || (p1.y < 0 && p2.y < 0 && p3.y < 0 && p4.y < 0));
+}
+
 class Point {
     get x() {
         return this._x;

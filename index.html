@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>Title</title>
     <style>
         html {
@@ -36,7 +37,7 @@
                 window.document.body.appendChild(e);
                 fps();
                 G.game = new Main(e.getContext("2d")).run();
-                window.onresize();
+                resize();
             });
         };
 
@@ -47,13 +48,18 @@
             window.document.body.appendChild(fps);
         }
 
-        window.onresize = function () {
+        function resize() {
             let ww = window.innerWidth;
             let wh = window.innerHeight;
             if (G && G.game && G.game.onresize) {
                 G.game.onresize(ww, wh);
             }
-        };
+        }
+
+        window.onresize = resize;
+        oncontextmenu = function (){
+            return false
+        }
     </script>
 
 </head>

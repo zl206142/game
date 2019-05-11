@@ -1,0 +1,15 @@
+class Fire extends Frame {
+
+    constructor(x, y) {
+        super("img/frame/big_fire.png");
+        this.x = x;
+        this.y = y;
+        this.xn = 8;
+        this.yn = 4;
+        this.ax = 0.5;
+        this.ay = 0.9;
+        this.scale = 0.2 + Math.random() * 0.2;
+        this.dely = 30;
+        this.loopTime = 10;
+    }
+}

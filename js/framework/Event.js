@@ -35,31 +35,13 @@ class Mouse {
 
     onmousedown(event) {
         let p = this.convertMouse(event.offsetX, event.offsetY);
-        this._events.push(new Event("mousedown", p.x, p.y));
-    }
-
-    ontouchstart(event) {
-        let p = this.convertTouch(event.changedTouches[0].clientX, event.changedTouches[0].clientY);
-        this._touch = p;
-        this._events.push(new Event("mousedown", p.x, p.y));
+        this._events.push(new Event("mousedown", event.btn, event.btns, p.x, p.y));
     }
 
     onmouseup(event) {
         let p = this.convertMouse(event.offsetX, event.offsetY);
-        this._events.push(new Event("mouseup", p.x, p.y));
+        this._events.push(new Event("mouseup", event.btn, event.btns, p.x, p.y));
     }
-
-    ontouchend(event) {
-        let p = this.convertTouch(event.changedTouches[0].clientX, event.changedTouches[0].clientY);
-        this._events.push(new Event("mouseup", p.x, p.y));
-    }
-
-    ontouchcancel(event) {
-        let p = this.convertTouch(event.changedTouches[0].clientX, event.changedTouches[0].clientY);
-        this._events.push(new Event("touchcancel", p.x, p.y));
-        console.log("touchcancel")
-    }
-
 
     onmousemove(event) {
         let m = this.convertMouse(event.movementX, event.movementY);
@@ -71,8 +53,25 @@ class Mouse {
             evt.mx += m.x;
             evt.my += m.y;
         } else {
-            this._events.push(new Event("mousemove", p.x, p.y, m.x, m.y));
+            this._events.push(new Event("mousemove", event.btn, event.btns, p.x, p.y, m.x, m.y));
         }
+    }
+
+    ontouchstart(event) {
+        let p = this.convertTouch(event.changedTouches[0].clientX, event.changedTouches[0].clientY);
+        this._touch = p;
+        this._events.push(new Event("mousedown", 0, 1, p.x, p.y));
+    }
+
+    ontouchend(event) {
+        let p = this.convertTouch(event.changedTouches[0].clientX, event.changedTouches[0].clientY);
+        this._events.push(new Event("mouseup", 0, 1, p.x, p.y));
+    }
+
+    ontouchcancel(event) {
+        let p = this.convertTouch(event.changedTouches[0].clientX, event.changedTouches[0].clientY);
+        this._events.push(new Event("touchcancel", 0, 1, p.x, p.y));
+        console.log("touchcancel")
     }
 
     ontouchmove(event) {
@@ -89,12 +88,28 @@ class Mouse {
             evt.mx += m.x;
             evt.my += m.y;
         } else {
-            this._events.push(new Event("mousemove", p.x, p.y, m.x, m.y));
+            this._events.push(new Event("mousemove", 0, 1, p.x, p.y, m.x, m.y));
         }
     }
 }
 
 class Event {
+    get btn() {
+        return this._btn;
+    }
+
+    set btn(value) {
+        this._btn = value;
+    }
+
+    get btns() {
+        return this._btns;
+    }
+
+    set btns(value) {
+        this._btns = value;
+    }
+
     get mx() {
         return this._mx;
     }
@@ -135,20 +150,22 @@ class Event {
         this._y = value;
     }
 
-    constructor(name, x, y, mx = 0, my = 0) {
+    constructor(name, btn = 0, btns = 1, x, y, mx = 0, my = 0) {
         this._name = name;
         this._x = x;
         this._y = y;
         this._mx = mx;
         this._my = my;
+        this._btn = btn;
+        this._btns = btns;
     }
 
     get key() {
-        return [this.name, this.x, this.y, this.mx, this.my].join("_")
+        return [this.name, this.btn, this.btns, this.x, this.y, this.mx, this.my].join("_")
     }
 
     clone() {
-        return new Event(this.name, this.x, this.y, this.mx, this.my);
+        return new Event(this.name, this.btn, this.btns, this.x, this.y, this.mx, this.my);
     }
 }
 

@@ -19,6 +19,7 @@ class Frame extends Pct {
     set yc(value) {
         if (value >= this.yn) {
             value -= this.yn;
+            this._frameEnd();
         }
         this._yc = value;
         this.sy = value * this.height;
@@ -60,20 +61,30 @@ class Frame extends Pct {
         this._dely = value;
     }
 
+    set loopTime(value) {
+        this._loopTime = value;
+    }
+
+    get loopTime() {
+        return this._loopTime;
+    }
+
     constructor(srcs = []) {
         if (typeof srcs === "string") {
             super(srcs);
             this._ht = true;
+            this._xn = 1;
         } else {
             super(srcs[0] || "");
+            this._xn = srcs.length || 1;
         }
         this._imgs = srcs;
-        this._xn = 1;
         this._yn = 1;
         this._xc = 0;
         this._yc = 0;
         this._stime = 0;
         this._dely = 100;
+        this._loopTime = 1;
     }
 
     loop(ctx, dt) {
@@ -96,17 +107,29 @@ class Frame extends Pct {
 
     nextD() {
         if (!this._imgs || !this._imgs.length) {
-            return "";
+            return;
         }
-        this._xc++;
-        if (this._xc >= this._imgs.length) {
-            this._xc = 0;
-        }
-        this.src = this._imgs[this._xc];
+        this.xc++;
+        this.src = this._imgs[this.xc];
     }
 
     nextA() {
         this.xc++;
+    }
+
+    _frameEnd() {
+        this.frameEnd();
+        this.loopTime--;
+        if (this.loopTime === 0) {
+            this.frameAllEnd()
+        }
+    }
+
+    frameEnd() {
+    }
+
+    frameAllEnd() {
+        this.removeFromParent();
     }
 
 }

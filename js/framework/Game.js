@@ -93,7 +93,7 @@ class Game extends Node {
         // f2.dely = 70;
 
 
-        let f4 = new Frame("img/frame/235332qd8djnkjni78hyn7.png");
+        let f4 = new Frame("img/frame/big_fire.png");
         this.add(f4);
         f4.x = 550;
         f4.y = 300;

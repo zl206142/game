@@ -17,13 +17,33 @@ let files = {
             ]
         },
         "/game": {
+            "/obj": {
+                "/": [
+                    "Background.js",
+                    "Plane.js",
+                    "Bullet.js",
+                    "Enemy.js",
+                    "Boom.js",
+                    "Fire.js",
+                    "EnemyBullet.js",
+                ]
+            },
             "/": [
-                "Background.js",
                 "Main.js"
             ]
         }
     },
 
+};
+
+let pct = {
+    "img": {
+        "/fire": {},
+        "/frame": {},
+        "/":[
+
+        ]
+    }
 };
 
 async function load(path, files) {

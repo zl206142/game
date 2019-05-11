@@ -95,6 +95,11 @@ class Node {
         this._children = [];
         this._events = {};
         this._change = true;
+        this.init();
+    }
+
+    init() {
+
     }
 
     get rotatePI() {
@@ -136,6 +141,9 @@ class Node {
 
 
     add(node, i = this._children.length) {
+        if(node._parent){
+            node.removeFromParent();
+        }
         this._children.splice(i, 0, node);
         node._parent = this;
     }
@@ -153,6 +161,7 @@ class Node {
     removeFromParent() {
         if (this._parent) {
             this._parent.remove(this);
+            this._parent = null;
         }
     }
 
@@ -219,7 +228,7 @@ class Node {
             }
             this._mousedown = false;
             return each(cbs, cb => cb.call(this, event));
-        } else if (event.name === "mousemove" && this._mousedown) {
+        } else if (event.name === "mousemove") {
             return each(cbs, cb => cb.call(this, event));
         }
         this.eventAfter();
@@ -236,7 +245,7 @@ class Node {
         }
         let m = this.toLocal(evt.mx, evt.my);
         let p = this.parentToLocal(evt.x, evt.y);
-        this._localEvent[key] = new Event(evt.name, p.x, p.y, m.x, m.y);
+        this._localEvent[key] = new Event(evt.name, evt.btn, evt.btns, p.x, p.y, m.x, m.y);
         return this._localEvent[key];
     }
 
@@ -274,6 +283,14 @@ class Node {
         } else {
             return pg;
         }
+    }
+
+    anchorCenter() {
+        this.ax = this.ay = 0.5;
+    }
+
+    set scale(value) {
+        this.scaleX = this.scaleY = value;
     }
 }
 
