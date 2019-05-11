@@ -9,6 +9,18 @@ class Game extends Node {
         this.fps = 0;
     }
 
+    onresize(w, h) {
+        let b = w / h;
+        let bt = this.width / this.height;
+        if (b > bt) {
+            this._ctx.canvas.style.width = "auto";
+            this._ctx.canvas.style.height = "90%"
+        } else {
+            this._ctx.canvas.style.width = "90%";
+            this._ctx.canvas.style.height = "auto"
+        }
+    }
+
     run() {
         console.log(this._width, this._height);
         this._mouse = new Mouse(this._ctx.canvas);
@@ -30,19 +42,6 @@ class Game extends Node {
         this.loop(this._ctx, this._dt);
         requestAnimationFrame(this.start.bind(this));
         this.fps++;
-    }
-
-    update(dt) {
-        // let c = new Rect(50);
-        // c.color = randomColor();
-        // c.x = Math.random() * this.width;
-        // c.y = Math.random() * this.height;
-        // c.ax = 0.5;
-        // c.ay = 0.5;
-        // this.add(c);
-        // c.update = function (dt) {
-        //     this.rotate += dt / 5;
-        // }
     }
 
     play() {

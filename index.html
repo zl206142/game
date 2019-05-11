@@ -15,7 +15,6 @@
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
-            height: 90%;
         }
 
         .tr {
@@ -24,24 +23,21 @@
             top: 0;
         }
     </style>
-    <script src="js/static.js"></script>
-    <script src="js/event.js"></script>
-    <script src="js/node.js"></script>
-    <script src="js/nodes/Pct.js"></script>
-    <script src="js/nodes/Rect.js"></script>
-    <script src="js/nodes/frame.js"></script>
-    <script src="js/nodes/Text.js"></script>
-    <script src="js/game.js"></script>
+    <script src="init.js"></script>
     <script>
         window.G = window.G || {};
         window.onload = function () {
-            const e = document.createElement("canvas");
-            e.width = 750;
-            e.height = 1334;
-            e.className = "center";
-            window.document.body.appendChild(e);
-            fps();
-            G.game = new Game(e.getContext("2d")).run();
+            load("", files).then(() => {
+                const e = document.createElement("canvas");
+                e.width = 750;
+                e.height = 1334;
+                e.className = "center";
+                e.id = "game";
+                window.document.body.appendChild(e);
+                fps();
+                G.game = new Main(e.getContext("2d")).run();
+                window.onresize();
+            });
         };
 
         function fps() {
@@ -51,7 +47,13 @@
             window.document.body.appendChild(fps);
         }
 
-        // window.onresize
+        window.onresize = function () {
+            let ww = window.innerWidth;
+            let wh = window.innerHeight;
+            if (G && G.game && G.game.onresize) {
+                G.game.onresize(ww, wh);
+            }
+        };
     </script>
 
 </head>
