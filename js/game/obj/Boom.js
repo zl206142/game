@@ -1,10 +1,10 @@
 class Boom extends Frame {
 
     constructor(x, y) {
-        super("img/frame/hahaha.png");
+        super(imgs.boom);
         this.xn = 8;
         this.yn = 5;
-        this.dely = 70;
+        this.daley = 80;
         this.anchorCenter();
         this.x = x;
         this.y = y;

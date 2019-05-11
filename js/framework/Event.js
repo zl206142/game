@@ -14,7 +14,10 @@ class Mouse {
     emitTo(node) {
         let evt = this._events.shift();
         while (evt) {
-            node.emit(evt);
+            try {
+                node.emit(evt);
+            } catch (e) {
+            }
             evt = this._events.shift();
         }
     }

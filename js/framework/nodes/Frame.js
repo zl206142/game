@@ -1,15 +1,30 @@
 class Frame extends Pct {
+    get daley() {
+        return this._daley;
+    }
+
+    set daley(value) {
+        this._daley = value;
+    }
+
     get xc() {
         return this._xc;
     }
 
     set xc(value) {
+        if (this.loopTime === 0) {
+            return;
+        }
         while (value >= this.xn) {
-            value -= this.xn;
             this.yc++;
+            value -= this.xn;
         }
         this._xc = value;
-        this.sx = value * this.width;
+        if (this._array) {
+            super.src = this._srcs[this.xc];
+        } else {
+            this.sx = value * this.width;
+        }
     }
 
     get yc() {
@@ -18,11 +33,13 @@ class Frame extends Pct {
 
     set yc(value) {
         if (value >= this.yn) {
-            value -= this.yn;
             this._frameEnd();
+            value -= this.yn;
         }
-        this._yc = value;
-        this.sy = value * this.height;
+        if (!this._array) {
+            this._yc = value;
+            this.sy = value * this.height;
+        }
     }
 
     get yn() {
@@ -32,13 +49,19 @@ class Frame extends Pct {
     set yn(value) {
         this._yn = value;
         if (this._img && this._img.height) {
-            this.sh = this._img.height / value;
+            this.height = this._img.height;
         }
     }
 
-    set sw(value) {
-        value /= this.xn;
-        super.sw = value;
+    set width(value) {
+        if (!this._array) {
+            value /= this.xn;
+        }
+        super.width = value;
+    }
+
+    get width() {
+        return this._width;
     }
 
     get xn() {
@@ -48,18 +71,19 @@ class Frame extends Pct {
     set xn(value) {
         this._xn = value;
         if (this._img && this._img.width) {
-            this.sw = this._img.width / value;
+            this.width = this._img.width;
         }
     }
 
-    set sh(value) {
+    set height(value) {
         value /= this.yn;
-        super.sh = value;
+        super.height = value;
     }
 
-    set dely(value) {
-        this._dely = value;
+    get height() {
+        return this._height;
     }
+
 
     set loopTime(value) {
         this._loopTime = value;
@@ -69,52 +93,45 @@ class Frame extends Pct {
         return this._loopTime;
     }
 
-    constructor(srcs = []) {
-        if (typeof srcs === "string") {
-            super(srcs);
-            this._ht = true;
-            this._xn = 1;
+    set src(value) {
+        this._srcs = value;
+        this._array = value instanceof Array;
+        if (this._array) {
+            this.xn = value.length;
+            super.src = value[0];
         } else {
-            super(srcs[0] || "");
-            this._xn = srcs.length || 1;
+            super.src = value;
         }
-        this._imgs = srcs;
+    }
+
+    get src() {
+        return this._srcs;
+    }
+
+    constructor(src = []) {
+        super();
+        this._xn = 1;
         this._yn = 1;
+        this.src = src;
         this._xc = 0;
         this._yc = 0;
         this._stime = 0;
-        this._dely = 100;
+        this._daley = 100;
         this._loopTime = 1;
     }
 
     loop(ctx, dt) {
         super.loop(ctx, dt);
         this._stime += dt;
-        if (this._stime < this._dely) {
+        if (this._stime < this.daley) {
             return;
         }
-        this._stime -= this._dely;
-        this.next();
-    }
+        this._stime -= this.daley;
+        try {
+            this.xc++;
+        } catch (e) {
 
-    next() {
-        if (!this._ht) {
-            this.nextD();
-        } else {
-            this.nextA();
         }
-    }
-
-    nextD() {
-        if (!this._imgs || !this._imgs.length) {
-            return;
-        }
-        this.xc++;
-        this.src = this._imgs[this.xc];
-    }
-
-    nextA() {
-        this.xc++;
     }
 
     _frameEnd() {
@@ -122,6 +139,7 @@ class Frame extends Pct {
         this.loopTime--;
         if (this.loopTime === 0) {
             this.frameAllEnd()
+            throw "end";
         }
     }
 
@@ -130,6 +148,9 @@ class Frame extends Pct {
 
     frameAllEnd() {
         this.removeFromParent();
+    }
+
+    onload() {
     }
 
 }

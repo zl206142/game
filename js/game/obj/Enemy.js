@@ -1,5 +1,7 @@
 class Enemy extends Pct {
-    init() {
+
+    constructor() {
+        super(imgs.test);
         this.ax = 0.5;
         this.ay = 0.5;
         this._f = 1;

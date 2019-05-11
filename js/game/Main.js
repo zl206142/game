@@ -2,12 +2,15 @@ class Main extends Game {
 
     play() {
         // super.play();
-        this._enemys = [];
+        this.game();
+    }
 
+    game() {
+        this._enemys = [];
         this.bg();
         this._player = this.player();
         this.enemy();
-
+        this.add(new Fire2(100, 100))
     }
 
     bg() {
@@ -20,7 +23,7 @@ class Main extends Game {
     }
 
     player() {
-        let plane = new Plane("img/test.jpg");
+        let plane = new Plane();
         plane.ax = 0.5;
         plane.ay = 0.5;
         plane.scaleX = 0.5;
@@ -34,7 +37,7 @@ class Main extends Game {
     }
 
     enemy() {
-        let enemy = new Enemy("img/test.jpg");
+        let enemy = new Enemy();
         enemy.x = 400;
         enemy.y = 200;
         enemy.scale = 0.3;

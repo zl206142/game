@@ -1,16 +1,12 @@
-function each(arr, cb, rt) {
+function each(arr, cb) {
     for (let i = 0; i < arr.length; i++) {
-        if (cb(arr[i]) === true && rt) {
-            return true;
-        }
+        cb(arr[i]);
     }
 }
 
-function eachR(arr, cb, rt) {
+function eachR(arr, cb) {
     for (let i = arr.length - 1; i > -1; i--) {
-        if (cb(arr[i]) === true && rt) {
-            return true;
-        }
+        cb(arr[i]);
     }
 }
 

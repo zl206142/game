@@ -4,14 +4,12 @@ class EnemyBullet extends Bullet {
         super(w, h);
         this.x = x;
         this.y = y;
-    }
-
-    init() {
         this.color = "#aa040e";
         this.ax = 0.5;
         this.ay = 0.5;
         this._speed = -500;
     }
+
 
     update(dt) {
         let n = this._speed * dt / 1000;

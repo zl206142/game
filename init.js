@@ -26,6 +26,7 @@ let script = {
                     "Boom.js",
                     "Fire.js",
                     "EnemyBullet.js",
+                    "Fire2.js",
                 ]
             },
             "/": [
@@ -53,9 +54,20 @@ let imgs = {
     test: "img/test.jpg",
 };
 
-async function preLoad() {
+async function preLoad(ctx) {
     await loadScripts("", script);
-    await loadImgs(imgs);
+    console.log("scripts load finish");
+    await loadImgs(imgs, path => {
+        let img = new Image();
+        img.src = path;
+        return new Promise(resolve => {
+            img.onload = function () {
+                ctx.drawImage(img, 0, 0);
+                resolve();
+            };
+        });
+    });
+    console.log("imgs load finish");
     console.log("load end");
 }
 
@@ -76,7 +88,7 @@ async function loadScripts(path, files) {
     }
 }
 
-async function loadImgs(files) {
+async function loadImgs(files, loadImg) {
     for (let k in files) {
         let v = files[k];
         if (typeof v === "string") {
@@ -87,17 +99,13 @@ async function loadImgs(files) {
                 await loadImg(v2);
             }
         } else {
-            await loadImgs(v);
+            await loadImgs(v, loadImg);
         }
     }
 }
 
 async function loadScript(path) {
     await loadPath("script", path);
-}
-
-async function loadImg(path) {
-    await loadPath("img", path);
 }
 
 async function loadPath(name, path, attr = "src") {

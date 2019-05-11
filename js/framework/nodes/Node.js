@@ -82,24 +82,19 @@ class Node {
     }
 
     constructor() {
-        this._x = 0;
+        this._x = 0;//位置
         this._y = 0;
-        this._ax = 0;
+        this._ax = 0;//锚点
         this._ay = 0;
-        this._width = 0;
+        this._width = 0;//尺寸
         this._height = 0;
-        this._scaleX = 1;
+        this._scaleX = 1;//缩放
         this._scaleY = 1;
-        this._rotate = 0;
+        this._rotate = 0;//旋转
         this._parent = null;
         this._children = [];
         this._events = {};
         this._change = true;
-        this.init();
-    }
-
-    init() {
-
     }
 
     get rotatePI() {
@@ -107,26 +102,39 @@ class Node {
     }
 
     get matrix() {
-        if (this._change) {
-            let p = (this._parent) || ap;
+        let p = (this._parent) || ap;
+        if (this._change || p._change) {
             this._matrix = mixt(this.x - p._axv, this.y - p._ayv, this.rotatePI, this.scaleX, this.scaleY);
-            this._axv = this.ax * this.width;
-            this._ayv = this.ay * this.height;
-            each(this._children, c => {
-                c._change = true
-            })
+            if (this._change) {
+                this._axv = this.ax * this.width;
+                this._ayv = this.ay * this.height;
+            }
         }
         return this._matrix;
     }
 
     loop(ctx, dt) {
-        this.update(dt);
+        this.initAndUpdate(dt);
         ctx.save();
         ctx.transform(...this.matrix);
         this.draw(ctx);
         this.drawChildren(ctx, dt);
         ctx.restore();
         this._change = false;
+    }
+
+    initAndUpdate(dt) {
+        this.init();
+        this.update(dt);
+        this.initAndUpdate = this.update;
+    }
+
+    init() {
+        // console.log("init");
+    }
+
+    update(dt) {
+
     }
 
     draw(ctx) {
@@ -141,7 +149,7 @@ class Node {
 
 
     add(node, i = this._children.length) {
-        if(node._parent){
+        if (node._parent) {
             node.removeFromParent();
         }
         this._children.splice(i, 0, node);
@@ -149,13 +157,11 @@ class Node {
     }
 
     remove(node) {
-        this._children = this._children.filter(n => {
-            if (n === node) {
-                n.parent = null;
-                return false
-            }
-            return true;
-        });
+        let i = this._children.indexOf(node);
+        if (i !== -1) {
+            this._children.splice(i, 1);
+            node._parent = null;
+        }
     }
 
     removeFromParent() {
@@ -165,9 +171,6 @@ class Node {
         }
     }
 
-    update(dt) {
-
-    }
 
     on(name, cb) {
         this._events[name] = this._events[name] || [];
@@ -193,19 +196,9 @@ class Node {
         }
     }
 
-    eventBefore() {
-        this._localEvent = {}
-    }
-
-    eventAfter() {
-        delete this._localEvent;
-    }
-
     emit(event) {
-        this.eventBefore();
-        if (eachR(this._children, c => c.emit(this.localEvent(event).clone()), true) === true) {
-            return true;
-        }
+        this._localEvent = {};
+        eachR(this._children, c => c.emit(this.localEvent(event).clone()));
         if (!this._event) {
             return;
         }
@@ -219,7 +212,7 @@ class Node {
             this._mousedown = pin;
             if (pin) {
                 each(cbs, cb => cb.call(this, event));
-                return true;
+                throw "jump";
             }
         } else if (event.name === "mouseup" && this._mousedown) {
             if (!pin) {
@@ -227,11 +220,10 @@ class Node {
                 cbs = this._events["mousecancel"] || []
             }
             this._mousedown = false;
-            return each(cbs, cb => cb.call(this, event));
+            each(cbs, cb => cb.call(this, event));
         } else if (event.name === "mousemove") {
-            return each(cbs, cb => cb.call(this, event));
+            each(cbs, cb => cb.call(this, event));
         }
-        this.eventAfter();
     }
 
     in(x, y) {

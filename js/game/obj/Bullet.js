@@ -4,9 +4,6 @@ class Bullet extends Rect {
         super(w, h);
         this.x = x;
         this.y = y;
-    }
-
-    init() {
         this.color = "#ffffff";
         this.ax = 0.5;
         this.ay = 0.5;

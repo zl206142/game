@@ -46,53 +46,6 @@ class Game extends Node {
 
     play() {
 
-        // this.on("mousedown", function (evt) {
-        //     let c = new Rect(50);
-        //     c.color = randomColor();
-        //     c.x = evt._x;
-        //     c.y = evt._y;
-        //     c.ax = 0.5;
-        //     c.ay = 0.5;
-        //     let cb = function (evt) {
-        //         this.x += evt._x;
-        //         this.y += evt._y;
-        //     };
-        //     c.on("mousemove", cb);
-        //     this.add(c);
-        //     setTimeout(() => {
-        //         c.off("mousemove", cb)
-        //     }, 5000)
-        // });
-
-
-        // let imgs = [
-        //     "img/fire/f0.png",
-        //     "img/fire/f1.png",
-        //     "img/fire/f2.png",
-        //     "img/fire/f3.png",
-        //     "img/fire/f4.png",
-        //     "img/fire/f5.png",
-        //     "img/fire/f6.png",
-        //     "img/fire/f7.png"
-        // ];
-        //
-        // let f = new Frame(imgs);
-        // this.add(f);
-        // f.x = 100;
-        // f.y = 130;
-        // f.dely = 50;
-        // f.scaleX = 0.25;
-        // f.scaleY = 0.25;
-
-        // let f2 = new Frame("img/frame/hahaha.png");
-        // this.add(f2);
-        // f2.x = 350;
-        // f2.y = 150;
-        // f2.xn = 8;
-        // f2.yn = 5;
-        // f2.dely = 70;
-
-
         let f4 = new Frame("img/frame/big_fire.png");
         this.add(f4);
         f4.x = 550;
@@ -103,14 +56,8 @@ class Game extends Node {
         f4.scaleY = 0.8;
         f4.ax = 0.5;
         f4.ay = 0.5;
-        f4.dely = 30;
-        f4.update = function () {
-            // console.log(this.width, this.height);
-        };
-        // f4.on("mousemove", function (evt) {
-        //     this.x += evt.mx;
-        //     this.y += evt.my;
-        // });
+        f4.daley = 30;
+        f4.loopTime = -1;
 
         let c = new Rect(50);
         c.color = randomColor();
@@ -120,6 +67,9 @@ class Game extends Node {
         c.scaleY = 3;
         f4.add(c);
         c.on("mousemove", function (evt) {
+            if (!this._mousedown) {
+                return;
+            }
             this.x += evt.mx;
             this.y += evt.my;
         });
@@ -138,8 +88,6 @@ class Game extends Node {
         t.color = randomColor();
         t.x = 400;
         t.y = 300;
-        // t.ax = 0.5;
-        // t.ay = 0.5;
         this.add(t);
 
 
@@ -150,10 +98,11 @@ class Game extends Node {
         ccc.ax = 0.5;
         ccc.ay = 0.5;
         ccc.rotate = 45;
-        // ccc.scaleX = 0.5;
-        // ccc.scaleY = 0.5;
         this.add(ccc);
         ccc.on("mousemove", function (evt) {
+            if (!this._mousedown) {
+                return;
+            }
             this.x += evt.mx;
             this.y += evt.my;
         });
@@ -171,6 +120,9 @@ class Game extends Node {
         cccc.scaleY = 2;
         ccc.add(cccc);
         cccc.on("mousemove", function (evt) {
+            if (!this._mousedown) {
+                return;
+            }
             this.x += evt.mx;
             this.y += evt.my;
         });

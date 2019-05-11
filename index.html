@@ -28,18 +28,23 @@
     <script>
         window.G = window.G || {};
         window.onload = function () {
-            preLoad().then(() => {
-                const e = document.createElement("canvas");
-                e.width = 750;
-                e.height = 1334;
-                e.className = "center";
-                e.id = "game";
-                window.document.body.appendChild(e);
+            let ctx = cctx();
+            preLoad(ctx).then(() => {
                 fps();
-                G.game = new Main(e.getContext("2d")).run();
-                resize();
+                G.game = new Main(ctx).run();
             });
         };
+
+        function cctx() {
+            const e = document.createElement("canvas");
+            e.width = 750;
+            e.height = 1334;
+            e.className = "center";
+            e.id = "game";
+            window.document.body.appendChild(e);
+            sizeInit(e);
+            return e.getContext("2d");
+        }
 
         function fps() {
             const fps = document.createElement("span");
@@ -48,15 +53,19 @@
             window.document.body.appendChild(fps);
         }
 
-        function resize() {
-            let ww = window.innerWidth;
-            let wh = window.innerHeight;
-            if (G && G.game && G.game.onresize) {
-                G.game.onresize(ww, wh);
-            }
+        function sizeInit(e) {
+            window.onresize = function () {
+                if (window.innerWidth / window.innerHeight > e.width / e.height) {
+                    e.style.width = "auto";
+                    e.style.height = "90%"
+                } else {
+                    e.style.width = "90%";
+                    e.style.height = "auto"
+                }
+            };
+            window.onresize();
         }
 
-        window.onresize = resize;
         oncontextmenu = function () {
             return false
         }
