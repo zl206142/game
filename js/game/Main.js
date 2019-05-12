@@ -10,7 +10,6 @@ class Main extends Game {
         this.bg();
         this._player = this.player();
         this.enemy();
-        this.add(new Fire2(100, 100))
     }
 
     bg() {
