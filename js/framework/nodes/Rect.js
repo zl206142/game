@@ -1,10 +1,9 @@
 class Rect extends Node {
 
-    constructor(width) {
+    constructor(width, height = width) {
         super();
         this._width = width;
-        this._height = width;
-        this._fillStyle = "#ffffff";
+        this._height = height;
     }
 
     set color(value) {
@@ -13,7 +12,7 @@ class Rect extends Node {
 
     draw(ctx) {
         ctx.beginPath();
-        ctx.fillStyle = this._fillStyle;
+        ctx.fillStyle = this._fillStyle || "#ffffff";
         ctx.rect(-this.ax * this.width, -this.ay * this.height, this._width, this._height);
         ctx.fill();
     }
