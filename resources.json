@@ -1,0 +1,16 @@
+{
+  "fire": [
+    "img/fire/f0.png",
+    "img/fire/f1.png",
+    "img/fire/f2.png",
+    "img/fire/f3.png",
+    "img/fire/f4.png",
+    "img/fire/f5.png",
+    "img/fire/f6.png",
+    "img/fire/f7.png"
+  ],
+  "big_fire": "img/frame/big_fire.png",
+  "boom": "img/frame/hahaha.png",
+  "bg": "img/bg.jpg",
+  "test": "img/test.jpg"
+}

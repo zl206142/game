@@ -4,75 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>Title</title>
-    <style>
-        html {
-            background-color: #666666;
-            user-select: none;
-        }
-
-        .center {
-            background-color: #000000;
-            position: fixed;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .tr {
-            position: fixed;
-            right: 0;
-            top: 0;
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
     <script src="init.js"></script>
-    <script>
-        window.G = window.G || {};
-        window.onload = function () {
-            let ctx = cctx();
-            preLoad(ctx).then(() => {
-                fps();
-                G.game = new Main(ctx).run();
-            });
-        };
-
-        function cctx() {
-            const e = document.createElement("canvas");
-            e.width = 750;
-            e.height = 1334;
-            e.className = "center";
-            e.id = "game";
-            window.document.body.appendChild(e);
-            sizeInit(e);
-            return e.getContext("2d");
-        }
-
-        function fps() {
-            const fps = document.createElement("span");
-            fps.id = "fps";
-            fps.className = "tr";
-            window.document.body.appendChild(fps);
-        }
-
-        function sizeInit(e) {
-            window.onresize = function () {
-                if (window.innerWidth / window.innerHeight > e.width / e.height) {
-                    e.style.width = "auto";
-                    e.style.height = "90%"
-                } else {
-                    e.style.width = "90%";
-                    e.style.height = "auto"
-                }
-            };
-            window.onresize();
-        }
-
-        oncontextmenu = function () {
-            return false
-        }
-    </script>
-
 </head>
 <body>
-
 </body>
 </html>

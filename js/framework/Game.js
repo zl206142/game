@@ -5,20 +5,7 @@ class Game extends Node {
         this._ctx = ctx;
         this.width = this._ctx.canvas.width;
         this.height = this._ctx.canvas.height;
-        this._fps = document.getElementById("fps");
         this.fps = 0;
-    }
-
-    onresize(w, h) {
-        let b = w / h;
-        let bt = this.width / this.height;
-        if (b > bt) {
-            this._ctx.canvas.style.width = "auto";
-            this._ctx.canvas.style.height = "90%"
-        } else {
-            this._ctx.canvas.style.width = "90%";
-            this._ctx.canvas.style.height = "auto"
-        }
     }
 
     run() {
@@ -26,10 +13,6 @@ class Game extends Node {
         this._mouse = new Mouse(this._ctx.canvas);
         this.start();
         this.play();
-        setInterval(() => {
-            this._fps.innerText = this.fps;
-            this.fps = 0;
-        }, 1000);
         return this;
     }
 
@@ -37,6 +20,7 @@ class Game extends Node {
         let now = Date.now();
         this._dt = now - this.now;
         this.now = now;
+
         this._mouse.emitTo(this);
         this._ctx.clearRect(0, 0, this._width, this._height);
         this.loop(this._ctx, this._dt);

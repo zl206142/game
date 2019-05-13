@@ -118,7 +118,7 @@ class Node {
         ctx.save();
         ctx.transform(...this.matrix);
         this.draw(ctx);
-        this.drawChildren(ctx, dt);
+        this.eachChildren(ctx, dt);
         ctx.restore();
         this._change = false;
     }
@@ -141,7 +141,7 @@ class Node {
 
     }
 
-    drawChildren(ctx, dt) {
+    eachChildren(ctx, dt) {
         each(this._children, function (child) {
             child.loop(ctx, dt);
         });

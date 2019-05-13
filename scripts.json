@@ -1,0 +1,37 @@
+{
+  "js": {
+    "/framework": {
+      "/nodes": {
+        "/": [
+          "Node.js",
+          "Pct.js",
+          "Frame.js",
+          "Rect.js",
+          "Text.js"
+        ]
+      },
+      "/": [
+        "Event.js",
+        "Game.js",
+        "Static.js"
+      ]
+    },
+    "/game": {
+      "/obj": {
+        "/": [
+          "Background.js",
+          "Plane.js",
+          "Bullet.js",
+          "Enemy.js",
+          "Boom.js",
+          "Fire.js",
+          "EnemyBullet.js",
+          "Fire2.js"
+        ]
+      },
+      "/": [
+        "Main.js"
+      ]
+    }
+  }
+}

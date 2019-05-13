@@ -1,7 +1,7 @@
 class Fire extends Frame {
 
     constructor(x, y) {
-        super(imgs.big_fire);
+        super(resources.big_fire);
         this.x = x;
         this.y = y;
         this.xn = 8;

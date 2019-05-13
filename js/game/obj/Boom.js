@@ -1,7 +1,7 @@
 class Boom extends Frame {
 
     constructor(x, y) {
-        super(imgs.boom);
+        super(resources.boom);
         this.xn = 8;
         this.yn = 5;
         this.daley = 80;

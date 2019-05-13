@@ -1,7 +1,7 @@
 class Plane extends Pct {
 
     constructor() {
-        super(imgs.test);
+        super(resources.test);
         this._speed = 500;
         this._shootTime = 0;
     }
