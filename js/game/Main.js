@@ -6,14 +6,14 @@ class Main extends Game {
     }
 
     game() {
-        this._enemys = [];
+        this._enemies = [];
         this.bg();
         this._player = this.player();
         this.enemy();
     }
 
     bg() {
-        let bg = new Background("img/bg.jpg");
+        let bg = new Background();
         this.add(bg);
         bg.scaleX = 1.8;
         bg.scaleY = 1.8;
@@ -41,6 +41,6 @@ class Main extends Game {
         enemy.y = 200;
         enemy.scale = 0.3;
         this.add(enemy);
-        this._enemys.push(enemy);
+        this._enemies.push(enemy);
     }
 }

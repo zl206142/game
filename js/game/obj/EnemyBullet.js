@@ -1,30 +1,9 @@
 class EnemyBullet extends Bullet {
 
-    constructor(w, h, x, y) {
-        super(w, h);
-        this.x = x;
-        this.y = y;
+    constructor(w, h, x, y, r) {
+        super(w, h, x, y, r);
         this.color = "#aa040e";
-        this.ax = 0.5;
-        this.ay = 0.5;
-        this._speed = -500;
+        this.speed = 500;
+        this.enemies = [G.game._player];
     }
-
-
-    update(dt) {
-        let n = this._speed * dt / 1000;
-        this.y -= n;
-        if (this.y < 0 || this.y > G.game.height) {
-            this.removeFromParent();
-            return;
-        }
-        if (G.game._player && G.game._player.byShoot(this.x, this.y, 0, -n)) {
-            this.shoot();
-        }
-    }
-
-    shoot() {
-        this.removeFromParent();
-    }
-
 }

@@ -1,8 +1,8 @@
 class Background extends Node {
-    constructor(src) {
+    constructor() {
         super();
-        let a = new Pct(src);
-        let b = new Pct(src);
+        let a = new Pct(G.resources.bg);
+        let b = new Pct(G.resources.bg);
         this._pcts = [a, b];
         this.add(a);
         this.add(b);

@@ -1,30 +1,56 @@
 class Bullet extends Rect {
+    get speed() {
+        return this._speed;
+    }
 
-    constructor(w, h, x, y) {
+    set speed(value) {
+        this._speed = value;
+        this._ds = value / 1000;
+    }
+
+    get enemies() {
+        return this._enemies;
+    }
+
+    set enemies(value) {
+        this._enemies = value;
+    }
+
+    constructor(w, h, x, y, r) {
         super(w, h);
         this.x = x;
         this.y = y;
         this.color = "#ffffff";
         this.ax = 0.5;
         this.ay = 0.5;
-        this._speed = 1000;
+        this.speed = 1000;
+        this.rotate = r || 0;
+        this.enemies = G.game._enemies;
     }
 
     update(dt) {
-        let n = this._speed * dt / 1000;
-        this.y -= n;
-        if (this.y < 0) {
-            this.removeFromParent();
-            return;
-        }
-        each(G.game._enemys || [], e => {
-            if (e.byShoot(this.x, this.y, 0, -n)) {
-                this.shoot();
+        let v = rotation(0, -this._ds * dt, this.rotatePI);
+        each(this.enemies || [], e => {
+            let sp = e.byShootPoint(this.x, this.y, v.x, v.y, this);
+            if (sp) {
+                e.afterByShoot(sp.x, sp.y, this);
+                this.shoot(e, sp);
             }
         });
+        this.checkOut();
+        this.x += v.x;
+        this.y += v.y;
     }
 
-    shoot() {
+    checkOut() {
+        if (!G.game.in(this.x, this.y)) {
+            this.removeFromParent();
+        }
+    }
+
+    shoot(e, sp) {
+        let g = e.localToGlobal(sp.x, sp.y);
+        new Boom(g.x, g.y);
         this.removeFromParent();
     }
 
