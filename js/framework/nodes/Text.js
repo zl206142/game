@@ -1,4 +1,4 @@
-class Text extends Node {
+class Text extends ZNode {
 
     constructor(text) {
         super();

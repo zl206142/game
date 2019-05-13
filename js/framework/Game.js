@@ -1,4 +1,4 @@
-class Game extends Node {
+class Game extends ZNode {
 
     constructor(ctx) {
         super();
@@ -13,19 +13,18 @@ class Game extends Node {
         this._mouse = new Mouse(this._ctx.canvas);
         this.start();
         this.play();
-        return this;
     }
 
     start() {
         let now = Date.now();
         this._dt = now - this.now;
         this.now = now;
-
-        this._mouse.emitTo(this);
+        this._mouse.emitTo();
         this._ctx.clearRect(0, 0, this._width, this._height);
         this.loop(this._ctx, this._dt);
         requestAnimationFrame(this.start.bind(this));
         this.fps++;
+        // console.log(Date.now() - this.now);
     }
 
     play() {

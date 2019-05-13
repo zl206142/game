@@ -1,4 +1,4 @@
-class Pct extends Node {
+class Pct extends ZNode {
     get sy() {
         return this._sy || 0;
     }

@@ -3,6 +3,7 @@
     "/framework": {
       "/nodes": {
         "/": [
+          "NodeBase.js",
           "Node.js",
           "Pct.js",
           "Frame.js",
@@ -10,8 +11,14 @@
           "Text.js"
         ]
       },
+      "/event": {
+        "/": [
+          "Event.js",
+          "Mouse.js",
+          "EventManager.js"
+        ]
+      },
       "/": [
-        "Event.js",
         "Game.js",
         "Static.js"
       ]

@@ -8,8 +8,8 @@ window.onload = async function () {
 
     await preLoad(ctx);
 
-    G.game = new Main(ctx).run();
-
+    G.game = new Main(ctx);
+    G.game.run();
     setInterval(() => {
         fpsNode.innerText = G.game.fps;
         G.game.fps = 0;

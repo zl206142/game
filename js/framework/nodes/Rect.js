@@ -1,4 +1,4 @@
-class Rect extends Node {
+class Rect extends ZNode {
 
     constructor(width, height = width) {
         super();
@@ -8,6 +8,10 @@ class Rect extends Node {
 
     set color(value) {
         this._fillStyle = value;
+    }
+
+    get color() {
+        return this._fillStyle;
     }
 
     draw(ctx) {

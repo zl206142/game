@@ -1,4 +1,4 @@
-class Background extends Node {
+class Background extends ZNode {
     constructor() {
         super();
         let a = new Pct(G.resources.bg);
