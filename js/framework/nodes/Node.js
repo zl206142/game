@@ -82,13 +82,13 @@ class ZNode extends ZNodeBase {
     }
 
     remove(node) {
-        let i = this._children.indexOf(node);
-        if (i !== -1) {
-            this._children.splice(i, 1);
+        let os = this._children.length;
+        this._children = this._children.filter(c => c !== node);
+        if (os !== this._children.length) {
             node._parent = null;
-        }
-        if (node.eventable) {
-            EventManager.remove(node);
+            if (node.eventable) {
+                EventManager.remove(node);
+            }
         }
     }
 
